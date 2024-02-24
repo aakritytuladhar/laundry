@@ -41,7 +41,7 @@ const PickUpScreen = () => {
     },
     {
       id: "3",
-      name: "5-6 Days",
+      name: "7-8 Days",
     },
     {
       id: "4",
