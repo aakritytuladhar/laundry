@@ -13,8 +13,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 const LoginScreen = () => {
-  const { email, setEmail } = useState("");
-  const { password, setPassword } = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
   return (
