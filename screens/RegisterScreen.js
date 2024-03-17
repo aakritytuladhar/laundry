@@ -1,23 +1,22 @@
 import {
-  KeyboardAvoidingView,
   StyleSheet,
   Text,
   View,
-  TextInput,
   Pressable,
+  TextInput,
+  SafeAreaView,
+  KeyboardAvoidingView,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
-import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import { Fontisto } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useRef, useState } from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { auth, db } from "../Firebase";
-
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../Firebase";
 import { doc, setDoc } from "firebase/firestore";
-
+import { SafeAreaProvider } from "react-native-safe-area-context";
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,23 +43,30 @@ const RegisterScreen = () => {
         console.log("user credential", userCredential);
         const user = userCredential._tokenResponse.email;
         const myUserUid = auth.currentUser.uid;
-
-        setDoc(doc(db, "users", `${myUserUid}`), {
+        const userRef = doc(db, "users", `${myUserUid}`);
+        console.log(userRef);
+        setDoc(userRef, {
           email: user,
           phone: phone,
-        });
+        })
+          .then(() => {
+            console.log("Document successfully written!");
+          })
+          .catch((error) => {
+            console.error("Error writing document: ", error);
+          });
       }
     );
   };
   return (
-    <SafeAreaProvider
-      style={{
-        flex: 1,
-        backgroundColor: "white",
-        alignItems: "center",
-        padding: 10,
-      }}>
-      <SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          backgroundColor: "white",
+          alignItems: "center",
+          padding: 10,
+        }}>
         <KeyboardAvoidingView>
           <View
             style={{
@@ -69,84 +75,80 @@ const RegisterScreen = () => {
               marginTop: 100,
             }}>
             <Text
-              style={{ fontSize: 20, color: "#662D91", fontWeight: "bold" }}>
+              style={{ fontSize: 20, color: "#662d91", fontWeight: "bold" }}>
               Register
             </Text>
-            <Text
-              style={{
-                fontSize: 18,
-                color: "#662D91",
-                fontWeight: "800",
-                marginTop: 15,
-              }}>
-              Create A New Account
+
+            <Text style={{ fontSize: 18, marginTop: 8, fontWeight: "600" }}>
+              Create a new Account
             </Text>
           </View>
+
           <View style={{ marginTop: 50 }}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Fontisto name="email" size={24} color="black" />
+              <MaterialCommunityIcons
+                name="email-outline"
+                size={24}
+                color="black"
+              />
               <TextInput
                 placeholder="Email"
-                placeholderTextColor="black"
                 value={email}
                 onChangeText={(text) => setEmail(text)}
+                placeholderTextColor="black"
                 style={{
                   fontSize: email ? 18 : 18,
-
                   borderBottomWidth: 1,
                   borderBottomColor: "gray",
-                  marginVertical: 10,
                   marginLeft: 13,
                   width: 250,
+                  marginVertical: 10,
                 }}
               />
             </View>
-          </View>
-          <View style={{ marginTop: 20 }}>
+
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Ionicons name="key-outline" size={24} color="black" />
               <TextInput
-                placeholder="Password"
-                placeholderTextColor="black"
                 value={password}
                 onChangeText={(text) => setPassword(text)}
                 secureTextEntry={true}
+                placeholder="Password"
+                placeholderTextColor="black"
                 style={{
                   fontSize: password ? 18 : 18,
                   borderBottomWidth: 1,
                   borderBottomColor: "gray",
-                  marginVertical: 10,
                   marginLeft: 13,
                   width: 250,
+                  marginVertical: 20,
                 }}
               />
             </View>
-          </View>
-          <View style={{ marginTop: 20 }}>
+
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Feather name="phone" size={24} color="black" />
               <TextInput
-                placeholder="Phone no"
-                placeholderTextColor="black"
                 value={phone}
                 onChangeText={(text) => setPhone(text)}
+                placeholder="Phone No"
+                placeholderTextColor="black"
                 style={{
                   fontSize: password ? 18 : 18,
                   borderBottomWidth: 1,
                   borderBottomColor: "gray",
-                  marginVertical: 10,
                   marginLeft: 13,
                   width: 250,
+                  marginVertical: 10,
                 }}
               />
             </View>
-          </View>
-          <View>
+
             <Pressable
               onPress={register}
               style={{
                 width: 200,
-                backgroundColor: "#008DDA",
+                backgroundColor: "#318CE7",
                 padding: 15,
                 borderRadius: 7,
                 marginTop: 50,
@@ -158,9 +160,10 @@ const RegisterScreen = () => {
                 Register
               </Text>
             </Pressable>
+
             <Pressable
-              style={{ marginTop: 20 }}
-              onPress={() => navigation.navigate("Login")}>
+              onPress={() => navigation.goBack()}
+              style={{ marginTop: 20 }}>
               <Text
                 style={{
                   textAlign: "center",
@@ -168,7 +171,7 @@ const RegisterScreen = () => {
                   color: "gray",
                   fontWeight: "500",
                 }}>
-                Already Have a Account ? Sign In
+                Already have a account? Sign in
               </Text>
             </Pressable>
           </View>
