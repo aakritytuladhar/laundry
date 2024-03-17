@@ -17,8 +17,7 @@ import DressItem from "../components/DressItem";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../ProductReducer";
 import { useNavigation } from "@react-navigation/native";
-import { collection, getDoc, getDocs } from "firebase/firestore";
-import { db } from "../Firebase";
+
 const HomeScreen = () => {
   const services = [
     {
@@ -104,8 +103,6 @@ const HomeScreen = () => {
 
   //cart reducer call
   const cart = useSelector((state) => state.cart.cart);
-  const [items, setItems] = useState([]);
-
   // Calculate total
   const total = cart
     .map((item) => item.quantity * item.price)
@@ -118,13 +115,8 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (product.length > 0) return;
-    const fetchProducts = async () => {
-      const colRef = collection(db, "types");
-      const docsSnap = await getDocs(colRef);
-      docsSnap.forEach((doc) => {
-        items.push(doc.data());
-      });
-      items?.map((service) => dispatch(getProducts(service)));
+    const fetchProducts = () => {
+      services.map((service) => dispatch(getProducts(service)));
     };
     fetchProducts();
     // console.log("show ", product);
