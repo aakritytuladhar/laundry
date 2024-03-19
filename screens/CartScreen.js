@@ -4,8 +4,14 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { decrementQuantity, incrementQuantity } from "../CartReducer";
+import {
+  cleanCart,
+  decrementQuantity,
+  incrementQuantity,
+} from "../CartReducer";
 import { incrementQty, decrementQty } from "../ProductReducer";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../firebase";
 
 const CartScreen = () => {
   const cart = useSelector((state) => state.cart.cart);
@@ -15,7 +21,28 @@ const CartScreen = () => {
     .map((item) => item.quantity * item.price)
     .reduce((curr, prev) => curr + prev, 0);
   const navigation = useNavigation();
+  const userUid = auth.currentUser.uid;
   const dispatch = useDispatch();
+  const placeOrder = async () => {
+    navigation.navigate("Order");
+    dispatch(cleanCart());
+    await setDoc(
+      doc(db, "users", `${userUid}`),
+      {
+        orders: { ...cart },
+        pickUpDetails: route.params,
+      },
+      {
+        merge: true,
+      }
+    )
+      .then(() => {
+        console.log("Merge successful");
+      })
+      .catch((error) => {
+        console.error("Error merging document: ", error);
+      });
+  };
   return (
     <>
       <SafeAreaProvider>
@@ -324,7 +351,7 @@ const CartScreen = () => {
               Extra charges may applied
             </Text>
           </View>
-          <Pressable>
+          <Pressable onPress={placeOrder}>
             <Text style={{ fontSize: 14, fontWeight: "500", color: "white" }}>
               Place Order
             </Text>

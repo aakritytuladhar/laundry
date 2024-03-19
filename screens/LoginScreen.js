@@ -14,7 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../Firebase";
+import { auth } from "../firebase";
 import { useEffect } from "react";
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -30,7 +30,7 @@ const LoginScreen = () => {
         setLoading(false);
       }
       if (authUser) {
-        navigation.navigate("Home");
+        navigation.replace("Home");
       }
     });
 

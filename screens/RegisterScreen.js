@@ -14,7 +14,7 @@ import React, { useRef, useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../Firebase";
+import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 const RegisterScreen = () => {
