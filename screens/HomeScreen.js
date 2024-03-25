@@ -235,9 +235,26 @@ const HomeScreen = () => {
               Extra charges may applied
             </Text>
           </View>
-          <Pressable onPress={() => navigation.navigate("PickUp")}>
-            <Text style={{ fontSize: 14, fontWeight: "400", color: "white" }}>
-              Procced to Pickup
+          <Pressable
+            onPress={() => navigation.navigate("PickUp")}
+            style={{
+              height: 50,
+              width: 100,
+              borderColor: "green",
+              borderRadius: 6,
+              backgroundColor: "#10A19D",
+              boxShadow:
+                " 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+            }}>
+            <Text
+              style={{
+                fontSize: 14,
+                fontWeight: "400",
+                color: "white",
+                paddingTop: 5,
+                textAlign: "center",
+              }}>
+              Proceed to Pickup
             </Text>
           </Pressable>
         </Pressable>

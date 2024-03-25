@@ -60,14 +60,19 @@ const CartScreen = () => {
                     flexDirection: "row",
                     alignItems: "center",
                   }}>
-                  <Ionicons
-                    omPress={() => navigation.goBack()}
-                    name="arrow-back"
-                    size={24}
-                    color="black"
-                  />
-                  <Text>Your Bucket</Text>
+                  <Pressable onPress={() => navigation.navigate("PickUp")}>
+                    <Ionicons
+                      omPress={() => navigation.goBack()}
+                      name="arrow-back"
+                      size={24}
+                      color="black"
+                    />
+                  </Pressable>
+                  <Text style={{ fontSize: 20, paddingLeft: 90 }}>
+                    Your Bucket
+                  </Text>
                 </View>
+
                 <Pressable
                   style={{
                     backgroundColor: "white",
@@ -315,7 +320,7 @@ const CartScreen = () => {
                         To Pay
                       </Text>
                       <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-                        {total + 95}
+                        {total + 20}
                       </Text>
                     </View>
                   </View>
@@ -351,8 +356,25 @@ const CartScreen = () => {
               Extra charges may applied
             </Text>
           </View>
-          <Pressable onPress={placeOrder}>
-            <Text style={{ fontSize: 14, fontWeight: "500", color: "white" }}>
+          <Pressable
+            onPress={placeOrder}
+            style={{
+              height: 40,
+              width: 100,
+              borderColor: "green",
+              borderRadius: 6,
+              backgroundColor: "#10A19D",
+              boxShadow:
+                " 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+            }}>
+            <Text
+              style={{
+                fontSize: 14,
+                fontWeight: "500",
+                color: "white",
+                paddingTop: 9,
+                textAlign: "center",
+              }}>
               Place Order
             </Text>
           </Pressable>

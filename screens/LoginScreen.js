@@ -83,7 +83,7 @@ const LoginScreen = () => {
                   fontWeight: "800",
                   marginTop: 15,
                 }}>
-                Sing In To Your Account
+                Sign In To Your Account
               </Text>
             </View>
             <View style={{ marginTop: 50 }}>

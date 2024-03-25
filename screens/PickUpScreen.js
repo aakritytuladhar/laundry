@@ -12,6 +12,7 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import HorizontalDatepicker from "@awrminkhodaei/react-native-horizontal-datepicker";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 const PickUpScreen = () => {
   const navigation = useNavigation();
@@ -103,6 +104,16 @@ const PickUpScreen = () => {
     <>
       <SafeAreaProvider>
         <SafeAreaView style={{ backgroundColor: "#F0F0F0", flex: 1 }}>
+          <View>
+            <Pressable onPress={() => navigation.navigate("Home")}>
+              <Ionicons
+                omPress={() => navigation.goBack()}
+                name="arrow-back"
+                size={24}
+                color="black"
+              />
+            </Pressable>
+          </View>
           <View>
             <Text
               style={{ fontSize: 16, fontWeight: "500", marginHorizontal: 10 }}>
@@ -214,9 +225,26 @@ const PickUpScreen = () => {
               Extra charges may applied
             </Text>
           </View>
-          <Pressable onPress={proceedToCart}>
-            <Text style={{ fontSize: 14, fontWeight: "400", color: "white" }}>
-              Procced to Cart
+          <Pressable
+            onPress={proceedToCart}
+            style={{
+              height: 50,
+              width: 100,
+              borderColor: "green",
+              borderRadius: 6,
+              backgroundColor: "#10A19D",
+              boxShadow:
+                " 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+            }}>
+            <Text
+              style={{
+                fontSize: 14,
+                fontWeight: "400",
+                color: "white",
+                textAlign: "center",
+                paddingTop: 5,
+              }}>
+              Proceed to Cart
             </Text>
           </Pressable>
         </Pressable>

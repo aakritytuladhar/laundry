@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { initializeFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyA4g3RleE8KkdZPLxjnTICe1TnhjBZjw38",
   authDomain: "laundry-application-b7713.firebaseapp.com",
@@ -14,6 +14,8 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
-const db = getFirestore();
+const db = initializeFirestore(app, {
+  experimentalForceLongPolling: true,
+});
 
 export { auth, db };
